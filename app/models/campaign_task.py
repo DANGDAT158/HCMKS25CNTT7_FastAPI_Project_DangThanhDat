@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from app.db.database import Base
@@ -13,7 +13,7 @@ class CampaignTask(Base):
     status = Column(String(20), default="TODO", nullable=False)
     priority = Column(String(20), default="MEDIUM", nullable=False)
     due_date = Column(DateTime, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     campaign = relationship(
         "Campaign",
